@@ -253,5 +253,16 @@ public class TipoDocumentoJpaController implements Serializable {
             em.close();
         }
     }
-    
+   public List<Persistencia.Entities.TipoDocumento> buscar(String id, String descripcion) {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery<TipoDocumento> cq = em.getCriteriaBuilder().createQuery(TipoDocumento.class);
+            Root<TipoDocumento> rt = cq.from(TipoDocumento.class);
+            cq.where(em.getCriteriaBuilder().equal(rt.get(Persistencia.Entities.TipoDocumento_.idTipodocumento), Integer.parseInt(id)),
+                    em.getCriteriaBuilder().equal(rt.get(Persistencia.Entities.TipoDocumento_.descripcion), descripcion));
+            return (em.createQuery(cq)).getResultList();
+        } finally {
+            em.close();
+        }
+    }
 }

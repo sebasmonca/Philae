@@ -434,7 +434,7 @@ public class Estado extends javax.swing.JFrame {
             }
             if (validar) {
                 Persistencia.Entities.Estado estado = new Persistencia.Entities.Estado();
-                estado.setDescripcion(txtDescripcion_Estado.getText());
+                estado.setDescripcion(Boolean.parseBoolean(txtDescripcion_Estado.getText()));
                 if (implEstado.createEstado(estado) != null) {
                     JOptionPane.showMessageDialog(this, "Estado creado");
                     cargarDatoGrid(estado.getIdEstado().toString());
@@ -457,7 +457,7 @@ public class Estado extends javax.swing.JFrame {
             }
             if (validar) {
                 Persistencia.Entities.Estado estado = implEstado.finEstadoById(Integer.parseInt(txtCodigo_Estado.getText().trim()));
-                estado.setDescripcion(txtDescripcion_Estado.getText());
+                estado.setDescripcion(Boolean.parseBoolean(txtDescripcion_Estado.getText()));
                 if (implEstado.editEstado(estado) != null) {
                     JOptionPane.showMessageDialog(this, "Estado Editado");
                     clear_Table();
@@ -523,7 +523,7 @@ public class Estado extends javax.swing.JFrame {
         clear_Table();
         for (int i = 0; i < list.size(); i++) {
             addRow(list.get(i).getIdEstado().toString(),
-                    list.get(i).getDescripcion().toString());
+                    String.valueOf( list.get(i).getDescripcion()));
         }
     }
 

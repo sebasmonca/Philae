@@ -240,4 +240,17 @@ public class PerfilJpaController implements Serializable {
         }
     }
     
+    public List<Perfil> buscar(String id, String descripcion) {
+         EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery<Persistencia.Entities.Perfil> cq = em.getCriteriaBuilder().createQuery(Perfil.class);
+            Root<Perfil> rt = cq.from(Perfil.class);
+            cq.where(em.getCriteriaBuilder().equal(rt.get(Persistencia.Entities.Perfil_.idperfil), Integer.parseInt(id)),
+                    em.getCriteriaBuilder().equal(rt.get(Persistencia.Entities.Perfil_.descripcion), descripcion));
+            return (em.createQuery(cq)).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+    
 }

@@ -743,7 +743,7 @@ public class Usuarios extends javax.swing.JFrame {
         cbxEstado.removeAllItems();
         List<Estado> listaEstado = implEstado.findEstadoEntities();
         for (int i = 0; i < listaEstado.size(); i++) {
-            cbxEstado.addItem(new ComboItem(listaEstado.get(i).getDescripcion(), listaEstado.get(i).getIdEstado().toString()));
+            cbxEstado.addItem(new ComboItem(String.valueOf(listaEstado.get(i).getDescripcion()), listaEstado.get(i).getIdEstado().toString()));
         }
     }
 

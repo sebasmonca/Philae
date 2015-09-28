@@ -177,4 +177,17 @@ public class PermisosJpaController implements Serializable {
         }
     }
     
+    public List<Permisos> buscar(String id, String descripcion) {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery<Persistencia.Entities.Permisos> cq = em.getCriteriaBuilder().createQuery(Permisos.class);
+            Root<Permisos> rt = cq.from(Permisos.class);
+            cq.where(em.getCriteriaBuilder().equal(rt.get(Persistencia.Entities.Permisos_.idPermisos), Integer.parseInt(id)),
+                    em.getCriteriaBuilder().equal(rt.get(Persistencia.Entities.Permisos_.descripcion), descripcion));
+            return (em.createQuery(cq)).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+    
 }

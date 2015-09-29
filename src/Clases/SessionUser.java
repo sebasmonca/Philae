@@ -14,8 +14,8 @@ import javax.swing.JOptionPane;
  * @author Sebas
  */
 public class SessionUser {
-    public static Usuario usuario;
     
+    public static Usuario usuario;    
     public static Integer isTipodocumento = 2;
     public static Integer isPermisos = 3;
     public static Integer isPerfil = 4;
@@ -35,7 +35,7 @@ public class SessionUser {
     public static void isValidarSessionJFrame(javax.swing.JFrame jframe,Integer is){
         Usuario usuario = SessionUser.getUsuario();
         Boolean res = true;
-        if(usuario!= null){
+        if(usuario != null){
             List<Persistencia.Entities.Permisos> listP = usuario.getIdperfil().getPermisosList();
             for (int i = 0; i < listP.size(); i++) {     
                 if(listP.get(i).getIdPermisos() == is){

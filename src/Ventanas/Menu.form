@@ -163,17 +163,11 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu1">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\Sebas\Documents\Materias\2015-1\PPI\PPI_V2\AvancePhilae\src\Imagenes\Producto.PGN.png"/>
-            </Property>
             <Property name="text" type="java.lang.String" value="Producto"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem10">
               <Properties>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\Sebas\Documents\Materias\2015-1\PPI\PPI_V2\AvancePhilae\src\Imagenes\Gestionar Producto.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Gestionar Producto"/>
               </Properties>
             </MenuItem>
@@ -210,9 +204,6 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu2">
           <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="2" name="C:\Users\Sebas\Documents\Materias\2015-1\PPI\PPI_V2\AvancePhilae\src\Imagenes\Logout.png"/>
-            </Property>
             <Property name="text" type="java.lang.String" value="Cerrar Sesi&#xf3;n"/>
           </Properties>
           <SubComponents>

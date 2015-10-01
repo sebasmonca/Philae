@@ -7,8 +7,9 @@ package Ventanas;
 
 import Clases.SessionUser;
 import javax.swing.JFrame;
+ 
 
-/**
+/*
  *
  * @author Sebas
  */
@@ -214,7 +215,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-       Clientes clientes = new Clientes();
+       Cliente clientes = new Cliente();
        jDesktopPane.add(clientes);
        clientes.show();
     }//GEN-LAST:event_jMenuItem3ActionPerformed

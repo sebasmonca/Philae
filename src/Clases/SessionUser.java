@@ -22,6 +22,8 @@ public class SessionUser {
     public static Integer isEstado = 5;
     public static Integer isUsuarios = 6;
     public static Integer isVerUsuario = 7;
+    public static Integer isCliente = 8;
+    public static Integer isVerCliente = 9;
     
 
     public static Usuario getUsuario() {

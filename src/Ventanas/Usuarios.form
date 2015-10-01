@@ -57,7 +57,7 @@
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="panelGrid" max="32767" attributes="0"/>
                   <Component id="panel_Usuario" alignment="0" min="-2" pref="846" max="-2" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
                       <Component id="btnMostrar_Form" min="-2" pref="194" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="btnTipo_Documento" min="-2" pref="140" max="-2" attributes="0"/>
@@ -76,10 +76,10 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="btnMostrar_Form" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnTipo_Documento" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnEstado" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnPermisos" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnMostrar_Form" alignment="0" min="-2" pref="23" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="panel_Usuario" min="-2" max="-2" attributes="0"/>
@@ -492,12 +492,12 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnGuardar" min="-2" pref="170" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
-                      <Component id="btnOpcion" min="-2" pref="156" max="-2" attributes="0"/>
-                      <EmptySpace pref="35" max="32767" attributes="0"/>
-                      <Component id="btnCancelar" min="-2" pref="155" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                      <Component id="btnGuardar" min="-2" pref="160" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
+                      <Component id="btnOpcion" min="-2" pref="160" max="-2" attributes="0"/>
+                      <EmptySpace pref="31" max="32767" attributes="0"/>
+                      <Component id="btnCancelar" min="-2" pref="160" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -581,8 +581,8 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="txtBuscar_Identificacion" pref="100" max="32767" attributes="0"/>
-                              <Component id="jLabel15" max="32767" attributes="0"/>
+                              <Component id="jLabel15" pref="100" max="32767" attributes="0"/>
+                              <Component id="txtBuscar_Identificacion" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -595,9 +595,9 @@
                               <Component id="jLabel19" pref="112" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="btnBuscar" min="-2" pref="100" max="-2" attributes="0"/>
-                              <Component id="btnBuscar_Todos" min="-2" pref="100" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="btnBuscar_Todos" pref="100" max="32767" attributes="0"/>
+                              <Component id="btnBuscar" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                       </Group>

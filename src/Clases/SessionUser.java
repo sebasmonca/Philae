@@ -5,6 +5,7 @@
  */
 package Clases;
 
+import Persistencia.Entities.Cliente;
 import Persistencia.Entities.Usuario;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -36,6 +37,7 @@ public class SessionUser {
     
     public static void isValidarSessionJFrame(javax.swing.JFrame jframe,Integer is){
         Usuario usuario = SessionUser.getUsuario();
+        //Cliente cliente = SessionUser.get
         Boolean res = true;
         if(usuario != null){
             List<Persistencia.Entities.Permisos> listP = usuario.getIdperfil().getPermisosList();

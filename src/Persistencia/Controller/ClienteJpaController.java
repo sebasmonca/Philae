@@ -8,6 +8,7 @@ package Persistencia.Controller;
 import Persistencia.Controller.exceptions.IllegalOrphanException;
 import Persistencia.Controller.exceptions.NonexistentEntityException;
 import Persistencia.Entities.Cliente;
+import Persistencia.Entities.Cliente_;
 import java.io.Serializable;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
@@ -281,6 +282,18 @@ public class ClienteJpaController implements Serializable {
         } finally {
             em.close();
         }
+    }    
+
+    public List<Cliente> buscar(String id, String razonSocial) {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery<Cliente> cq = em.getCriteriaBuilder().createQuery(Cliente.class);
+            Root<Cliente> rt = cq.from(Cliente.class);
+            cq.where (em.getCriteriaBuilder().equal(rt.get(Cliente_.idCliente), Integer.parseInt(id)),
+                      em.getCriteriaBuilder().equal(rt.get(Cliente_.razonsocialcliente), razonSocial));
+            return (em.createQuery(cq)).getResultList();                      
+        } finally {
+            em.close();            
+        }
     }
-    
 }

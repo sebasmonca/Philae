@@ -23,8 +23,11 @@ public class SessionUser {
     public static Integer isEstado = 5;
     public static Integer isUsuarios = 6;
     public static Integer isVerUsuario = 7;
+    
+    public static Cliente cliente;
     public static Integer isCliente = 8;
     public static Integer isVerCliente = 9;
+    
     
 
     public static Usuario getUsuario() {
@@ -35,9 +38,16 @@ public class SessionUser {
         SessionUser.usuario = usuario;
     }
     
+    public static Cliente getCliente(){
+        return cliente;
+    }
+    
+    public static void  setCliente(Cliente cliente){
+        SessionUser.cliente = cliente;
+    }
+    
     public static void isValidarSessionJFrame(javax.swing.JFrame jframe,Integer is){
-        Usuario usuario = SessionUser.getUsuario();
-        //Cliente cliente = SessionUser.get
+        Usuario usuario = SessionUser.getUsuario();                
         Boolean res = true;
         if(usuario != null){
             List<Persistencia.Entities.Permisos> listP = usuario.getIdperfil().getPermisosList();
@@ -53,6 +63,22 @@ public class SessionUser {
                 }
                 
             }
+        }
+        
+        Cliente cliente = SessionUser.getCliente();
+        if (cliente != null) {
+             List<Persistencia.Entities.Permisos> listP = usuario.getIdperfil().getPermisosList();
+            for (int i = 0; i < listP.size(); i++) {     
+                if(listP.get(i).getIdPermisos() == is){
+                    res = false;
+                    jframe.show();
+                }
+                if(listP.get(i).getIdPermisos() == isVerUsuario && is == isUsuarios){
+                    res = false;
+                    ((Ventanas.Usuarios)jframe).permisos();
+                    jframe.show();
+                }                
+            }            
         }
         if (res) {
             JOptionPane.showMessageDialog(null, "!No tines los permisos para entrar a este modulo", "Permiso denegado", JOptionPane.ERROR_MESSAGE);

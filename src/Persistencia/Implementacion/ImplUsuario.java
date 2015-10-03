@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package Persistencia.Implementacion;
-
+   
 import Persistencia.Controller.UsuarioJpaController;
 import Persistencia.Entities.Usuario;
 import java.util.List;

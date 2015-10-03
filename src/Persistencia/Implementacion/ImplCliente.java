@@ -16,6 +16,12 @@ import javax.persistence.Persistence;
  */
 public class ImplCliente {
 
+    public static Cliente findTipoDocumentoById(int parseInt) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
+
     private ClienteJpaController clienteJpaController ;
 
     public ImplCliente() {
@@ -25,6 +31,7 @@ public class ImplCliente {
             e.printStackTrace();
         }
     }
+     
     
     public List<Cliente> finClienteEntities(){
         return this.clienteJpaController.findClienteEntities();

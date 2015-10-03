@@ -16,9 +16,13 @@ import Persistencia.Entities.Perfil;
 import Persistencia.Entities.TipoDocumento;
 import Persistencia.Entities.Usuario;
 import Persistencia.Entities.Usuario_;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Predicate;
 
 /**
  *
@@ -242,10 +246,16 @@ public class UsuarioJpaController implements Serializable {
         try {
             CriteriaQuery<Usuario> cq = em.getCriteriaBuilder().createQuery(Usuario.class);
             Root<Usuario> rt = cq.from(Usuario.class);
-            cq.where(em.getCriteriaBuilder().equal(rt.get(Usuario_.idUsuario), Integer.parseInt(id)),
-                    em.getCriteriaBuilder().equal(rt.get(Usuario_.nombres), nombre),
-                    em.getCriteriaBuilder().equal(rt.get(Usuario_.numerodocumento), numeroDocumento));
-            return (em.createQuery(cq)).getResultList();
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Usuario> c = cb.createQuery(Usuario.class);
+            List<Predicate> criteria = new ArrayList<Predicate>();
+            criteria.add(cb.like(rt.get("idUsuario"), "%"+id+"%"));
+            criteria.add(cb.like(rt.get("nombres"), "%"+nombre+"%"));
+            criteria.add(cb.like(rt.get("numerodocumento"), "%"+numeroDocumento+"%"));
+            Predicate[] p = criteria.toArray(new Predicate[criteria.size()]);
+            c.where(p);
+            TypedQuery<Usuario> q = em.createQuery(c);
+            return q.getResultList();
         } finally {
             em.close();
         }

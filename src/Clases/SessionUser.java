@@ -6,6 +6,7 @@
 package Clases;
 
 import Persistencia.Entities.Cliente;
+import Persistencia.Entities.Molde;
 import Persistencia.Entities.Usuario;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -28,6 +29,10 @@ public class SessionUser {
     public static Integer isCliente = 8;
     public static Integer isVerCliente = 9;
     
+    public static Molde molde;
+    public static Integer isMolde = 10;
+    public static Integer isVerMolde = 11;
+    
     
 
     public static Usuario getUsuario() {
@@ -44,6 +49,14 @@ public class SessionUser {
     
     public static void  setCliente(Cliente cliente){
         SessionUser.cliente = cliente;
+    }
+    
+     public static Molde getMolde(){
+        return molde;
+    }
+    
+    public static void  setMolde(Molde molde){
+        SessionUser.molde = molde;
     }
     
     public static void isValidarSessionJFrame(javax.swing.JFrame jframe,Integer is){
@@ -73,11 +86,27 @@ public class SessionUser {
                     res = false;
                     jframe.show();
                 }
-                if(listP.get(i).getIdPermisos() == isVerUsuario && is == isUsuarios){
+                if(listP.get(i).getIdPermisos() == isVerCliente && is == isCliente){
                     res = false;
                     ((Ventanas.Usuarios)jframe).permisos();
                     jframe.show();
-                }                
+                }              
+            }            
+        }
+        
+        Molde molde = SessionUser.getMolde();
+        if (cliente != null) {
+             List<Persistencia.Entities.Permisos> listP = usuario.getIdperfil().getPermisosList();
+            for (int i = 0; i < listP.size(); i++) {     
+                if(listP.get(i).getIdPermisos() == is){
+                    res = false;
+                    jframe.show();
+                }
+                if(listP.get(i).getIdPermisos() == isVerMolde && is == isMolde){
+                    res = false;
+                    ((Ventanas.Usuarios)jframe).permisos();
+                    jframe.show();
+                }            
             }            
         }
         if (res) {

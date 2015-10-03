@@ -19,8 +19,12 @@ import Persistencia.Entities.OrdenProduccion;
 import java.util.ArrayList;
 import java.util.List;
 import Persistencia.Entities.Molde;
+import Persistencia.Entities.Usuario;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Predicate;
 
 /**
  *
@@ -289,9 +293,15 @@ public class ClienteJpaController implements Serializable {
         try {
             CriteriaQuery<Cliente> cq = em.getCriteriaBuilder().createQuery(Cliente.class);
             Root<Cliente> rt = cq.from(Cliente.class);
-            cq.where (em.getCriteriaBuilder().equal(rt.get(Cliente_.idCliente), Integer.parseInt(id)),
-                      em.getCriteriaBuilder().equal(rt.get(Cliente_.razonsocialcliente), razonSocial));
-            return (em.createQuery(cq)).getResultList();                      
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Cliente> c = cb.createQuery(Cliente.class);
+            List<Predicate> criteria = new ArrayList<Predicate>();
+            criteria.add(cb.like(rt.get("idCliente"), "%"+id+"%"));
+            criteria.add(cb.like(rt.get("razonSocial"), "%"+razonSocial+"%"));
+            Predicate[] p = criteria.toArray(new Predicate[criteria.size()]);
+            c.where(p);
+            TypedQuery<Cliente> q = em.createQuery(c);
+            return q.getResultList();                    
         } finally {
             em.close();            
         }

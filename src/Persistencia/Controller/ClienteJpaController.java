@@ -299,7 +299,7 @@ public class ClienteJpaController implements Serializable {
             criteria.add(cb.like(rt.get("idCliente"), "%"+id+"%"));
             criteria.add(cb.like(rt.get("razonSocial"), "%"+razonSocial+"%"));
             Predicate[] p = criteria.toArray(new Predicate[criteria.size()]);
-            c.where(p);
+            c.where(p); 
             TypedQuery<Cliente> q = em.createQuery(c);
             return q.getResultList();                    
         } finally {

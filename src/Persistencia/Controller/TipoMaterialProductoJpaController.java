@@ -5,7 +5,6 @@
  */
 package Persistencia.Controller;
 
-import Persistencia.Controller.exceptions.IllegalOrphanException;
 import Persistencia.Controller.exceptions.NonexistentEntityException;
 import java.io.Serializable;
 import javax.persistence.Query;
@@ -21,7 +20,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Sebas
+ * @author yuri
  */
 public class TipoMaterialProductoJpaController implements Serializable {
 
@@ -50,13 +49,8 @@ public class TipoMaterialProductoJpaController implements Serializable {
             tipoMaterialProducto.setOrdenProduccionList(attachedOrdenProduccionList);
             em.persist(tipoMaterialProducto);
             for (OrdenProduccion ordenProduccionListOrdenProduccion : tipoMaterialProducto.getOrdenProduccionList()) {
-                TipoMaterialProducto oldIdTipoMaterialProductoOfOrdenProduccionListOrdenProduccion = ordenProduccionListOrdenProduccion.getIdTipoMaterialProducto();
-                ordenProduccionListOrdenProduccion.setIdTipoMaterialProducto(tipoMaterialProducto);
+                ordenProduccionListOrdenProduccion.getTipoMaterialProductoList().add(tipoMaterialProducto);
                 ordenProduccionListOrdenProduccion = em.merge(ordenProduccionListOrdenProduccion);
-                if (oldIdTipoMaterialProductoOfOrdenProduccionListOrdenProduccion != null) {
-                    oldIdTipoMaterialProductoOfOrdenProduccionListOrdenProduccion.getOrdenProduccionList().remove(ordenProduccionListOrdenProduccion);
-                    oldIdTipoMaterialProductoOfOrdenProduccionListOrdenProduccion = em.merge(oldIdTipoMaterialProductoOfOrdenProduccionListOrdenProduccion);
-                }
             }
             em.getTransaction().commit();
         } finally {
@@ -66,7 +60,7 @@ public class TipoMaterialProductoJpaController implements Serializable {
         }
     }
 
-    public void edit(TipoMaterialProducto tipoMaterialProducto) throws IllegalOrphanException, NonexistentEntityException, Exception {
+    public void edit(TipoMaterialProducto tipoMaterialProducto) throws NonexistentEntityException, Exception {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -74,18 +68,6 @@ public class TipoMaterialProductoJpaController implements Serializable {
             TipoMaterialProducto persistentTipoMaterialProducto = em.find(TipoMaterialProducto.class, tipoMaterialProducto.getIdTipoMaterialProducto());
             List<OrdenProduccion> ordenProduccionListOld = persistentTipoMaterialProducto.getOrdenProduccionList();
             List<OrdenProduccion> ordenProduccionListNew = tipoMaterialProducto.getOrdenProduccionList();
-            List<String> illegalOrphanMessages = null;
-            for (OrdenProduccion ordenProduccionListOldOrdenProduccion : ordenProduccionListOld) {
-                if (!ordenProduccionListNew.contains(ordenProduccionListOldOrdenProduccion)) {
-                    if (illegalOrphanMessages == null) {
-                        illegalOrphanMessages = new ArrayList<String>();
-                    }
-                    illegalOrphanMessages.add("You must retain OrdenProduccion " + ordenProduccionListOldOrdenProduccion + " since its idTipoMaterialProducto field is not nullable.");
-                }
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
-            }
             List<OrdenProduccion> attachedOrdenProduccionListNew = new ArrayList<OrdenProduccion>();
             for (OrdenProduccion ordenProduccionListNewOrdenProduccionToAttach : ordenProduccionListNew) {
                 ordenProduccionListNewOrdenProduccionToAttach = em.getReference(ordenProduccionListNewOrdenProduccionToAttach.getClass(), ordenProduccionListNewOrdenProduccionToAttach.getIdOrdenProduccion());
@@ -94,15 +76,16 @@ public class TipoMaterialProductoJpaController implements Serializable {
             ordenProduccionListNew = attachedOrdenProduccionListNew;
             tipoMaterialProducto.setOrdenProduccionList(ordenProduccionListNew);
             tipoMaterialProducto = em.merge(tipoMaterialProducto);
+            for (OrdenProduccion ordenProduccionListOldOrdenProduccion : ordenProduccionListOld) {
+                if (!ordenProduccionListNew.contains(ordenProduccionListOldOrdenProduccion)) {
+                    ordenProduccionListOldOrdenProduccion.getTipoMaterialProductoList().remove(tipoMaterialProducto);
+                    ordenProduccionListOldOrdenProduccion = em.merge(ordenProduccionListOldOrdenProduccion);
+                }
+            }
             for (OrdenProduccion ordenProduccionListNewOrdenProduccion : ordenProduccionListNew) {
                 if (!ordenProduccionListOld.contains(ordenProduccionListNewOrdenProduccion)) {
-                    TipoMaterialProducto oldIdTipoMaterialProductoOfOrdenProduccionListNewOrdenProduccion = ordenProduccionListNewOrdenProduccion.getIdTipoMaterialProducto();
-                    ordenProduccionListNewOrdenProduccion.setIdTipoMaterialProducto(tipoMaterialProducto);
+                    ordenProduccionListNewOrdenProduccion.getTipoMaterialProductoList().add(tipoMaterialProducto);
                     ordenProduccionListNewOrdenProduccion = em.merge(ordenProduccionListNewOrdenProduccion);
-                    if (oldIdTipoMaterialProductoOfOrdenProduccionListNewOrdenProduccion != null && !oldIdTipoMaterialProductoOfOrdenProduccionListNewOrdenProduccion.equals(tipoMaterialProducto)) {
-                        oldIdTipoMaterialProductoOfOrdenProduccionListNewOrdenProduccion.getOrdenProduccionList().remove(ordenProduccionListNewOrdenProduccion);
-                        oldIdTipoMaterialProductoOfOrdenProduccionListNewOrdenProduccion = em.merge(oldIdTipoMaterialProductoOfOrdenProduccionListNewOrdenProduccion);
-                    }
                 }
             }
             em.getTransaction().commit();
@@ -122,7 +105,7 @@ public class TipoMaterialProductoJpaController implements Serializable {
         }
     }
 
-    public void destroy(Integer id) throws IllegalOrphanException, NonexistentEntityException {
+    public void destroy(Integer id) throws NonexistentEntityException {
         EntityManager em = null;
         try {
             em = getEntityManager();
@@ -134,16 +117,10 @@ public class TipoMaterialProductoJpaController implements Serializable {
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The tipoMaterialProducto with id " + id + " no longer exists.", enfe);
             }
-            List<String> illegalOrphanMessages = null;
-            List<OrdenProduccion> ordenProduccionListOrphanCheck = tipoMaterialProducto.getOrdenProduccionList();
-            for (OrdenProduccion ordenProduccionListOrphanCheckOrdenProduccion : ordenProduccionListOrphanCheck) {
-                if (illegalOrphanMessages == null) {
-                    illegalOrphanMessages = new ArrayList<String>();
-                }
-                illegalOrphanMessages.add("This TipoMaterialProducto (" + tipoMaterialProducto + ") cannot be destroyed since the OrdenProduccion " + ordenProduccionListOrphanCheckOrdenProduccion + " in its ordenProduccionList field has a non-nullable idTipoMaterialProducto field.");
-            }
-            if (illegalOrphanMessages != null) {
-                throw new IllegalOrphanException(illegalOrphanMessages);
+            List<OrdenProduccion> ordenProduccionList = tipoMaterialProducto.getOrdenProduccionList();
+            for (OrdenProduccion ordenProduccionListOrdenProduccion : ordenProduccionList) {
+                ordenProduccionListOrdenProduccion.getTipoMaterialProductoList().remove(tipoMaterialProducto);
+                ordenProduccionListOrdenProduccion = em.merge(ordenProduccionListOrdenProduccion);
             }
             em.remove(tipoMaterialProducto);
             em.getTransaction().commit();

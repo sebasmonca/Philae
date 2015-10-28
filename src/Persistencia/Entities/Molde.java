@@ -30,25 +30,13 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Sebas
+ * @author yuri
  */
 @Entity
-@Table(name = "molde")
+@Table(name = "Molde")
 @NamedQueries({
-    @NamedQuery(name = "Molde.findAll", query = "SELECT m FROM Molde m"),
-    @NamedQuery(name = "Molde.findByIdMolde", query = "SELECT m FROM Molde m WHERE m.idMolde = :idMolde"),
-    @NamedQuery(name = "Molde.findByNombremolde", query = "SELECT m FROM Molde m WHERE m.nombremolde = :nombremolde"),
-    @NamedQuery(name = "Molde.findByCavidadesmolde", query = "SELECT m FROM Molde m WHERE m.cavidadesmolde = :cavidadesmolde"),
-    @NamedQuery(name = "Molde.findByDuctosmolde", query = "SELECT m FROM Molde m WHERE m.ductosmolde = :ductosmolde"),
-    @NamedQuery(name = "Molde.findByCanalesenfriamientomolde", query = "SELECT m FROM Molde m WHERE m.canalesenfriamientomolde = :canalesenfriamientomolde"),
-    @NamedQuery(name = "Molde.findByBarrasexpulsorasmolde", query = "SELECT m FROM Molde m WHERE m.barrasexpulsorasmolde = :barrasexpulsorasmolde"),
-    @NamedQuery(name = "Molde.findByPesomolde", query = "SELECT m FROM Molde m WHERE m.pesomolde = :pesomolde"),
-    @NamedQuery(name = "Molde.findByCiclotiempomolde", query = "SELECT m FROM Molde m WHERE m.ciclotiempomolde = :ciclotiempomolde"),
-    @NamedQuery(name = "Molde.findByPropiedadintelectualmolde", query = "SELECT m FROM Molde m WHERE m.propiedadintelectualmolde = :propiedadintelectualmolde"),
-    @NamedQuery(name = "Molde.findByFechacreacionmolde", query = "SELECT m FROM Molde m WHERE m.fechacreacionmolde = :fechacreacionmolde"),
-    @NamedQuery(name = "Molde.findByFechaingresomolde", query = "SELECT m FROM Molde m WHERE m.fechaingresomolde = :fechaingresomolde")})
+    @NamedQuery(name = "Molde.findAll", query = "SELECT m FROM Molde m")})
 public class Molde implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,10 +55,10 @@ public class Molde implements Serializable {
     private String barrasexpulsorasmolde;
     @Basic(optional = false)
     @Column(name = "Peso_molde")
-    private String pesomolde;
+    private int pesomolde;
     @Basic(optional = false)
     @Column(name = "Ciclo_tiempo_molde")
-    private String ciclotiempomolde;
+    private int ciclotiempomolde;
     @Basic(optional = false)
     @Column(name = "Propiedad_intelectual_molde")
     private String propiedadintelectualmolde;
@@ -83,21 +71,23 @@ public class Molde implements Serializable {
     @Lob
     @Column(name = "Observaciones_molde")
     private String observacionesmolde;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMolde", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMolde", fetch = FetchType.LAZY)
     private List<MantenimientoMoldeMaquina> mantenimientoMoldeMaquinaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMolde", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMolde", fetch = FetchType.LAZY)
     private List<OrdenProduccion> ordenProduccionList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "moldeidMolde", fetch = FetchType.EAGER)
-    private List<ProgramacionMaquina> programacionMaquinaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMolde", fetch = FetchType.LAZY)
+    private List<ConfiguracionProducto> configuracionProductoList;
     @JoinColumn(name = "idCliente", referencedColumnName = "idCliente")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Cliente idCliente;
     @JoinColumn(name = "idEstado_Molde_Maquina", referencedColumnName = "idEstado_Molde_Maquina")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private EstadoMoldeMaquina idEstadoMoldeMaquina;
     @JoinColumn(name = "idMaterial_Molde", referencedColumnName = "idMaterial_Molde")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private MaterialMolde idMaterialMolde;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "moldeidMolde", fetch = FetchType.LAZY)
+    private List<ProgramacionMaquina> programacionMaquinaList;
 
     public Molde() {
     }
@@ -106,7 +96,7 @@ public class Molde implements Serializable {
         this.idMolde = idMolde;
     }
 
-    public Molde(Integer idMolde, String pesomolde, String ciclotiempomolde, String propiedadintelectualmolde) {
+    public Molde(Integer idMolde, int pesomolde, int ciclotiempomolde, String propiedadintelectualmolde) {
         this.idMolde = idMolde;
         this.pesomolde = pesomolde;
         this.ciclotiempomolde = ciclotiempomolde;
@@ -161,19 +151,19 @@ public class Molde implements Serializable {
         this.barrasexpulsorasmolde = barrasexpulsorasmolde;
     }
 
-    public String getPesomolde() {
+    public int getPesomolde() {
         return pesomolde;
     }
 
-    public void setPesomolde(String pesomolde) {
+    public void setPesomolde(int pesomolde) {
         this.pesomolde = pesomolde;
     }
 
-    public String getCiclotiempomolde() {
+    public int getCiclotiempomolde() {
         return ciclotiempomolde;
     }
 
-    public void setCiclotiempomolde(String ciclotiempomolde) {
+    public void setCiclotiempomolde(int ciclotiempomolde) {
         this.ciclotiempomolde = ciclotiempomolde;
     }
 
@@ -225,12 +215,12 @@ public class Molde implements Serializable {
         this.ordenProduccionList = ordenProduccionList;
     }
 
-    public List<ProgramacionMaquina> getProgramacionMaquinaList() {
-        return programacionMaquinaList;
+    public List<ConfiguracionProducto> getConfiguracionProductoList() {
+        return configuracionProductoList;
     }
 
-    public void setProgramacionMaquinaList(List<ProgramacionMaquina> programacionMaquinaList) {
-        this.programacionMaquinaList = programacionMaquinaList;
+    public void setConfiguracionProductoList(List<ConfiguracionProducto> configuracionProductoList) {
+        this.configuracionProductoList = configuracionProductoList;
     }
 
     public Cliente getIdCliente() {
@@ -257,6 +247,14 @@ public class Molde implements Serializable {
         this.idMaterialMolde = idMaterialMolde;
     }
 
+    public List<ProgramacionMaquina> getProgramacionMaquinaList() {
+        return programacionMaquinaList;
+    }
+
+    public void setProgramacionMaquinaList(List<ProgramacionMaquina> programacionMaquinaList) {
+        this.programacionMaquinaList = programacionMaquinaList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -281,12 +279,12 @@ public class Molde implements Serializable {
     public String toString() {
         return "Persistencia.Entities.Molde[ idMolde=" + idMolde + " ]";
     }
-
     @PostLoad
     public void fixIt() {
         this.mantenimientoMoldeMaquinaList = new ArrayList<>(this.mantenimientoMoldeMaquinaList);
         this.ordenProduccionList = new ArrayList<>(this.ordenProduccionList);
         this.programacionMaquinaList = new ArrayList<>(this.programacionMaquinaList);
+        this.configuracionProductoList=new ArrayList<>(this.configuracionProductoList);
     }
 
 }

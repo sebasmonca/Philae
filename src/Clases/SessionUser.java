@@ -7,6 +7,7 @@ package Clases;
 
 import Persistencia.Entities.Cliente;
 import Persistencia.Entities.Molde;
+import Persistencia.Entities.Permisos;
 import Persistencia.Entities.Usuario;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -16,6 +17,7 @@ import javax.swing.JOptionPane;
  * @author Sebas
  */
 public class SessionUser {
+    
     
     public static Usuario usuario;    
     public static Integer isTipodocumento = 2;
@@ -61,55 +63,20 @@ public class SessionUser {
     
     public static void isValidarSessionJFrame(javax.swing.JFrame jframe,Integer is){
         Usuario usuario = SessionUser.getUsuario();                
-        Boolean res = true;
+        Boolean res = false;
         if(usuario != null){
             List<Persistencia.Entities.Permisos> listP = usuario.getIdperfil().getPermisosList();
-            for (int i = 0; i < listP.size(); i++) {     
-                if(listP.get(i).getIdPermisos() == is){
-                    res = false;
+            for (Permisos permiso : listP) {
+                if(permiso.getIdPermisos() == is){
+                    res = true;
                     jframe.show();
                 }
-                if(listP.get(i).getIdPermisos() == isVerUsuario && is == isUsuarios){
-                    res = false;
-                    ((Ventanas.Usuarios)jframe).permisos();
-                    jframe.show();
-                }
-                
             }
         }
         
-        Cliente cliente = SessionUser.getCliente();
-        if (cliente != null) {
-             List<Persistencia.Entities.Permisos> listP = usuario.getIdperfil().getPermisosList();
-            for (int i = 0; i < listP.size(); i++) {     
-                if(listP.get(i).getIdPermisos() == is){
-                    res = false;
-                    jframe.show();
-                }
-                if(listP.get(i).getIdPermisos() == isVerCliente && is == isCliente){
-                    res = false;
-                    ((Ventanas.Usuarios)jframe).permisos();
-                    jframe.show();
-                }              
-            }            
-        }
-        
-        Molde molde = SessionUser.getMolde();
-        if (cliente != null) {
-             List<Persistencia.Entities.Permisos> listP = usuario.getIdperfil().getPermisosList();
-            for (int i = 0; i < listP.size(); i++) {     
-                if(listP.get(i).getIdPermisos() == is){
-                    res = false;
-                    jframe.show();
-                }
-                if(listP.get(i).getIdPermisos() == isVerMolde && is == isMolde){
-                    res = false;
-                    ((Ventanas.Usuarios)jframe).permisos();
-                    jframe.show();
-                }            
-            }            
-        }
-        if (res) {
+        if (!res) {
+            jframe.show();
+            ((Ventanas.Usuarios)jframe).permisos();
             JOptionPane.showMessageDialog(null, "!No tines los permisos para entrar a este modulo", "Permiso denegado", JOptionPane.ERROR_MESSAGE);
         }
     }

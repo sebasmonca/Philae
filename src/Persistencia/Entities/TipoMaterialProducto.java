@@ -9,29 +9,26 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.PostLoad;
 import javax.persistence.Table;
 
 /**
  *
- * @author Sebas
+ * @author yuri
  */
 @Entity
-@Table(name = "tipo_material_producto")
+@Table(name = "Tipo_Material_Producto")
 @NamedQueries({
-    @NamedQuery(name = "TipoMaterialProducto.findAll", query = "SELECT t FROM TipoMaterialProducto t"),
-    @NamedQuery(name = "TipoMaterialProducto.findByIdTipoMaterialProducto", query = "SELECT t FROM TipoMaterialProducto t WHERE t.idTipoMaterialProducto = :idTipoMaterialProducto"),
-    @NamedQuery(name = "TipoMaterialProducto.findByDescripcion", query = "SELECT t FROM TipoMaterialProducto t WHERE t.descripcion = :descripcion")})
+    @NamedQuery(name = "TipoMaterialProducto.findAll", query = "SELECT t FROM TipoMaterialProducto t")})
 public class TipoMaterialProducto implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,7 +39,7 @@ public class TipoMaterialProducto implements Serializable {
     @Basic(optional = false)
     @Column(name = "Descripcion")
     private String descripcion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoMaterialProducto", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "tipoMaterialProductoList", fetch = FetchType.LAZY)
     private List<OrdenProduccion> ordenProduccionList;
 
     public TipoMaterialProducto() {
@@ -105,9 +102,8 @@ public class TipoMaterialProducto implements Serializable {
     public String toString() {
         return "Persistencia.Entities.TipoMaterialProducto[ idTipoMaterialProducto=" + idTipoMaterialProducto + " ]";
     }
-    @PostLoad
+     @PostLoad
     public void fixIt() {
         this.ordenProduccionList = new ArrayList<>(this.ordenProduccionList);
     }
-    
 }

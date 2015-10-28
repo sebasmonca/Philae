@@ -27,14 +27,12 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Sebas
+ * @author yuri
  */
 @Entity
-@Table(name = "perfil")
+@Table(name = "Perfil")
 @NamedQueries({
-    @NamedQuery(name = "Perfil.findAll", query = "SELECT p FROM Perfil p"),
-    @NamedQuery(name = "Perfil.findByIdperfil", query = "SELECT p FROM Perfil p WHERE p.idperfil = :idperfil"),
-    @NamedQuery(name = "Perfil.findByDescripcion", query = "SELECT p FROM Perfil p WHERE p.descripcion = :descripcion")})
+    @NamedQuery(name = "Perfil.findAll", query = "SELECT p FROM Perfil p")})
 public class Perfil implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -45,12 +43,12 @@ public class Perfil implements Serializable {
     @Basic(optional = false)
     @Column(name = "Descripcion")
     private String descripcion;
-    @JoinTable(name = "permisos_has_perfil", joinColumns = {
-    @JoinColumn(name = "idperfil", referencedColumnName = "idperfil")}, inverseJoinColumns = {
-    @JoinColumn(name = "idPermisos", referencedColumnName = "idPermisos")})
-    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "Permisos_has_Perfil", joinColumns = {
+        @JoinColumn(name = "idperfil", referencedColumnName = "idperfil")}, inverseJoinColumns = {
+        @JoinColumn(name = "idPermisos", referencedColumnName = "idPermisos")})
+    @ManyToMany(fetch = FetchType.LAZY)
     private List<Permisos> permisosList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idperfil", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idperfil", fetch = FetchType.LAZY)
     private List<Usuario> usuarioList;
 
     public Perfil() {
@@ -125,6 +123,6 @@ public class Perfil implements Serializable {
     public void fixIt() {
         this.permisosList = new ArrayList<>(this.permisosList);
         this.usuarioList = new ArrayList<>(this.usuarioList);
+        
     }
-    
 }

@@ -1,4 +1,4 @@
-/*
+ /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -6,7 +6,7 @@
 package Ventanas;
 
 import Clases.ComboItem;
-import Persistencia.Entities.TipoDocumento;
+import Persistencia.Entities.Tipodocumento;
 import Persistencia.Entities.Usuario;
 import Persistencia.Implementacion.ImplCliente;
 import Persistencia.Implementacion.ImplTipo_documento;
@@ -26,10 +26,19 @@ public class Cliente extends javax.swing.JFrame {
 
     private ImplTipo_documento implTipo_documento = null;
     private ImplCliente implCliente = null;
+    private Ventanas.Molde moldes;
 
     /**
      * Creates new form Cliente
      */
+    public Cliente(Ventanas.Molde moldes) {
+        implTipo_documento = new ImplTipo_documento();
+        implCliente = new ImplCliente();
+        this.moldes=moldes;
+        initComponents();
+        initElement();
+        initData();
+    }
     public Cliente() {
         implTipo_documento = new ImplTipo_documento();
         implCliente = new ImplCliente();
@@ -217,6 +226,7 @@ public class Cliente extends javax.swing.JFrame {
 
         panelBotonesCliente.setBackground(new java.awt.Color(153, 153, 153));
 
+        BtnGuardarCliente.setIcon(new javax.swing.ImageIcon("C:\\Users\\yuri\\Desktop\\Philae\\src\\Imagenes\\Guardar.png")); // NOI18N
         BtnGuardarCliente.setText("Guardar");
         BtnGuardarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -224,6 +234,7 @@ public class Cliente extends javax.swing.JFrame {
             }
         });
 
+        BtnNuevoClente.setIcon(new javax.swing.ImageIcon("C:\\Users\\yuri\\Desktop\\Philae\\src\\Imagenes\\gestionarcliente.png")); // NOI18N
         BtnNuevoClente.setText("Nuevo");
         BtnNuevoClente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -231,6 +242,7 @@ public class Cliente extends javax.swing.JFrame {
             }
         });
 
+        BtnCancelarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Ventanas/cancelar.png"))); // NOI18N
         BtnCancelarCliente.setText("Cancelar");
 
         javax.swing.GroupLayout panelBotonesClienteLayout = new javax.swing.GroupLayout(panelBotonesCliente);
@@ -326,7 +338,7 @@ public class Cliente extends javax.swing.JFrame {
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(49, 49, 49)
                 .addComponent(panelBotonesCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
 
         jLabel13.setText("Id");
@@ -339,6 +351,7 @@ public class Cliente extends javax.swing.JFrame {
             }
         });
 
+        btnBuscarCliente.setIcon(new javax.swing.ImageIcon("C:\\Users\\yuri\\Desktop\\Philae\\src\\Imagenes\\BuscarCliente.png")); // NOI18N
         btnBuscarCliente.setText("Buscar");
         btnBuscarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -346,6 +359,7 @@ public class Cliente extends javax.swing.JFrame {
             }
         });
 
+        btnBuscarTodosCliente.setIcon(new javax.swing.ImageIcon("C:\\Users\\yuri\\Desktop\\Philae\\src\\Imagenes\\gestionUsuario.png")); // NOI18N
         btnBuscarTodosCliente.setText("Todos");
         btnBuscarTodosCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -379,7 +393,7 @@ public class Cliente extends javax.swing.JFrame {
                         .addComponent(txtBuscarNombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panelGridClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnBuscarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+                    .addComponent(btnBuscarCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnBuscarTodosCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(43, 43, 43))
             .addGroup(panelGridClienteLayout.createSequentialGroup()
@@ -400,12 +414,10 @@ public class Cliente extends javax.swing.JFrame {
                         .addGroup(panelGridClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtBuscarIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtBuscarNombreCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(panelGridClienteLayout.createSequentialGroup()
-                        .addGap(5, 5, 5)
-                        .addComponent(btnBuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnBuscarTodosCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                    .addComponent(btnBuscarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBuscarTodosCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 651, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(32, Short.MAX_VALUE))
         );
@@ -563,7 +575,7 @@ public class Cliente extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Cliente().setVisible(true);
+                new Cliente(null).setVisible(true);
             }
         });
     }
@@ -618,7 +630,7 @@ public class Cliente extends javax.swing.JFrame {
 
     public void initTipoDocumento() {
         cbxTipodocumentoCliente.removeAllItems();
-        List<TipoDocumento> listaTipoDocumento = implTipo_documento.findTipoDocumentoEntities();
+        List<Tipodocumento> listaTipoDocumento = implTipo_documento.findTipoDocumentoEntities();
         for (int i = 0; i < listaTipoDocumento.size(); i++) {
             cbxTipodocumentoCliente.addItem(new ComboItem(listaTipoDocumento.get(i).getDescripcion(), listaTipoDocumento.get(i).getIdTipodocumento().toString()));
         }
@@ -880,8 +892,10 @@ public class Cliente extends javax.swing.JFrame {
             
             if (validar) {
                 Persistencia.Entities.Cliente cliente = implCliente.finCliente(Integer.parseInt(txtCodigoCliente.getText().trim()));
+                
                 ComboItem valueTipoDocumento = (ComboItem) cbxTipodocumentoCliente.getSelectedItem();
                 cliente.setIdTipodocumento(implTipo_documento.findTipoDocumentoById(Integer.parseInt(valueTipoDocumento.getValue())));
+                
                 cliente.setNumeroidentificacioncliente(txtNumeroDocumentoCliente.getText());
                 cliente.setRazonsocialcliente(txtRazonSocialCliente.getText());
                 cliente.setDireccioncliente(txtDireccionCliente.getText());
@@ -893,12 +907,12 @@ public class Cliente extends javax.swing.JFrame {
                 cliente.setCorreocontactocliente(txtCorreoContactoCliente.getText());
 
                if (implCliente.editarCliente(cliente) != null) {
-                    JOptionPane.showMessageDialog(this, "Usuario Editado");
+                    JOptionPane.showMessageDialog(this, "Cliente Editado");
                     clear_Table();
                     findAllEntities();
                     panelFormCliente.setVisible(false);
                 } else {
-                    JOptionPane.showMessageDialog(this, "Error al Editar el Usuario");
+                    JOptionPane.showMessageDialog(this, "Error al Editar el cliente");
                 }
             }
         } catch (Exception e) {
@@ -928,6 +942,26 @@ public class Cliente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error");
             e.printStackTrace();
         }
+    }
+    public void permisos(){
+      txtApellidosContactoCliente.setEditable(false);
+      txtBuscarNombreCliente.setEditable(false);
+      txtCorreoContactoCliente.setEditable(false);
+      txtDireccionCliente.setEditable(false);
+      txtNombreContactoCliente.setEditable(false);
+      txtNumeroDocumentoCliente.setEditable(false);
+      txtRazonSocialCliente.setEditable(false);
+      txtTelefonoCliente.setEditable(false);
+      txtTelefonoContactoCliente.setEditable(false);
+      txtTelefonoMovilContactoCliente.setEditable(false);
+      txtCodigoCliente.setEditable(false);
+      txtBuscarIdCliente.setEditable(false);
+      cbxTipodocumentoCliente.setEnabled(false);
+      BtnNuevoClente.setEnabled(false);
+      BtnCancelarCliente.setEnabled(false);
+      BtnGuardarCliente.setEnabled(false);
+      
+              
     }
 
 }

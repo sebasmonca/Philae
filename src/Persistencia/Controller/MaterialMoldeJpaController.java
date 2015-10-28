@@ -21,7 +21,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Sebas
+ * @author yuri
  */
 public class MaterialMoldeJpaController implements Serializable {
 
@@ -199,5 +199,16 @@ public class MaterialMoldeJpaController implements Serializable {
             em.close();
         }
     }
-    
+     public List<Persistencia.Entities.MaterialMolde> buscar(String id, String descripcion) {
+        EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery<MaterialMolde> cq = em.getCriteriaBuilder().createQuery(MaterialMolde.class);
+            Root<MaterialMolde> rt = cq.from(MaterialMolde.class);
+            cq.where(em.getCriteriaBuilder().equal(rt.get("idMateralMolde"), Integer.parseInt(id)),
+                    em.getCriteriaBuilder().equal(rt.get("descripcion"), descripcion));
+            return (em.createQuery(cq)).getResultList();
+        } finally {
+            em.close();
+        }
+    }
 }

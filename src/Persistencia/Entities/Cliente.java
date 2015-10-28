@@ -26,24 +26,13 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Sebas
+ * @author yuri
  */
 @Entity
-@Table(name = "cliente")
+@Table(name = "Cliente")
 @NamedQueries({
-    @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c"),
-    @NamedQuery(name = "Cliente.findByIdCliente", query = "SELECT c FROM Cliente c WHERE c.idCliente = :idCliente"),
-    @NamedQuery(name = "Cliente.findByNumeroidentificacioncliente", query = "SELECT c FROM Cliente c WHERE c.numeroidentificacioncliente = :numeroidentificacioncliente"),
-    @NamedQuery(name = "Cliente.findByRazonsocialcliente", query = "SELECT c FROM Cliente c WHERE c.razonsocialcliente = :razonsocialcliente"),
-    @NamedQuery(name = "Cliente.findByDireccioncliente", query = "SELECT c FROM Cliente c WHERE c.direccioncliente = :direccioncliente"),
-    @NamedQuery(name = "Cliente.findByTelefonocliente", query = "SELECT c FROM Cliente c WHERE c.telefonocliente = :telefonocliente"),
-    @NamedQuery(name = "Cliente.findByNombrecontacto", query = "SELECT c FROM Cliente c WHERE c.nombrecontacto = :nombrecontacto"),
-    @NamedQuery(name = "Cliente.findByApellidocontacto", query = "SELECT c FROM Cliente c WHERE c.apellidocontacto = :apellidocontacto"),
-    @NamedQuery(name = "Cliente.findByTelefonocontacto", query = "SELECT c FROM Cliente c WHERE c.telefonocontacto = :telefonocontacto"),
-    @NamedQuery(name = "Cliente.findByTelefonomovilcontacto", query = "SELECT c FROM Cliente c WHERE c.telefonomovilcontacto = :telefonomovilcontacto"),
-    @NamedQuery(name = "Cliente.findByCorreocontactocliente", query = "SELECT c FROM Cliente c WHERE c.correocontactocliente = :correocontactocliente")})
+    @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c")})
 public class Cliente implements Serializable {
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,31 +48,28 @@ public class Cliente implements Serializable {
     @Basic(optional = false)
     @Column(name = "Direccion_cliente")
     private String direccioncliente;
-    @Basic(optional = false)
     @Column(name = "Telefono_cliente")
-    private int telefonocliente;
+    private Integer telefonocliente;
     @Basic(optional = false)
     @Column(name = "Nombre_contacto")
     private String nombrecontacto;
     @Basic(optional = false)
     @Column(name = "Apellido_contacto")
     private String apellidocontacto;
-    @Basic(optional = false)
     @Column(name = "Telefono_contacto")
-    private int telefonocontacto;
-    @Basic(optional = false)
+    private Integer telefonocontacto;
     @Column(name = "Telefono_movil_contacto")
-    private int telefonomovilcontacto;
+    private Integer telefonomovilcontacto;
     @Basic(optional = false)
     @Column(name = "Correo_contacto_cliente")
     private String correocontactocliente;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "dCliente", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "dCliente", fetch = FetchType.LAZY)
     private List<OrdenProduccion> ordenProduccionList;
-    @JoinColumn(name = "idTipo_documento", referencedColumnName = "idTipo_documento")
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
-    private TipoDocumento idTipodocumento;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCliente", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCliente", fetch = FetchType.LAZY)
     private List<Molde> moldeList;
+    @JoinColumn(name = "idTipo_documento", referencedColumnName = "idTipo_documento")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Tipodocumento idTipodocumento;
 
     public Cliente() {
     }
@@ -92,16 +78,13 @@ public class Cliente implements Serializable {
         this.idCliente = idCliente;
     }
 
-    public Cliente(Integer idCliente, String numeroidentificacioncliente, String razonsocialcliente, String direccioncliente, int telefonocliente, String nombrecontacto, String apellidocontacto, int telefonocontacto, int telefonomovilcontacto, String correocontactocliente) {
+    public Cliente(Integer idCliente, String numeroidentificacioncliente, String razonsocialcliente, String direccioncliente, String nombrecontacto, String apellidocontacto, String correocontactocliente) {
         this.idCliente = idCliente;
         this.numeroidentificacioncliente = numeroidentificacioncliente;
         this.razonsocialcliente = razonsocialcliente;
         this.direccioncliente = direccioncliente;
-        this.telefonocliente = telefonocliente;
         this.nombrecontacto = nombrecontacto;
         this.apellidocontacto = apellidocontacto;
-        this.telefonocontacto = telefonocontacto;
-        this.telefonomovilcontacto = telefonomovilcontacto;
         this.correocontactocliente = correocontactocliente;
     }
 
@@ -137,11 +120,11 @@ public class Cliente implements Serializable {
         this.direccioncliente = direccioncliente;
     }
 
-    public int getTelefonocliente() {
+    public Integer getTelefonocliente() {
         return telefonocliente;
     }
 
-    public void setTelefonocliente(int telefonocliente) {
+    public void setTelefonocliente(Integer telefonocliente) {
         this.telefonocliente = telefonocliente;
     }
 
@@ -161,19 +144,19 @@ public class Cliente implements Serializable {
         this.apellidocontacto = apellidocontacto;
     }
 
-    public int getTelefonocontacto() {
+    public Integer getTelefonocontacto() {
         return telefonocontacto;
     }
 
-    public void setTelefonocontacto(int telefonocontacto) {
+    public void setTelefonocontacto(Integer telefonocontacto) {
         this.telefonocontacto = telefonocontacto;
     }
 
-    public int getTelefonomovilcontacto() {
+    public Integer getTelefonomovilcontacto() {
         return telefonomovilcontacto;
     }
 
-    public void setTelefonomovilcontacto(int telefonomovilcontacto) {
+    public void setTelefonomovilcontacto(Integer telefonomovilcontacto) {
         this.telefonomovilcontacto = telefonomovilcontacto;
     }
 
@@ -193,20 +176,20 @@ public class Cliente implements Serializable {
         this.ordenProduccionList = ordenProduccionList;
     }
 
-    public TipoDocumento getIdTipodocumento() {
-        return idTipodocumento;
-    }
-
-    public void setIdTipodocumento(TipoDocumento idTipodocumento) {
-        this.idTipodocumento = idTipodocumento;
-    }
-
     public List<Molde> getMoldeList() {
         return moldeList;
     }
 
     public void setMoldeList(List<Molde> moldeList) {
         this.moldeList = moldeList;
+    }
+
+    public Tipodocumento getIdTipodocumento() {
+        return idTipodocumento;
+    }
+
+    public void setIdTipodocumento(Tipodocumento idTipodocumento) {
+        this.idTipodocumento = idTipodocumento;
     }
 
     @Override
@@ -233,11 +216,9 @@ public class Cliente implements Serializable {
     public String toString() {
         return "Persistencia.Entities.Cliente[ idCliente=" + idCliente + " ]";
     }
-
     @PostLoad
     public void fixIt() {
         this.moldeList = new ArrayList<>(this.moldeList);
         this.ordenProduccionList = new ArrayList<>(this.ordenProduccionList);
-    }
-
+    }    
 }

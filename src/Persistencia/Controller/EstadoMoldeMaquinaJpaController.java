@@ -23,7 +23,7 @@ import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Sebas
+ * @author yuri
  */
 public class EstadoMoldeMaquinaJpaController implements Serializable {
 

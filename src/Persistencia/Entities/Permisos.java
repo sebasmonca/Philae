@@ -23,14 +23,12 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Sebas
+ * @author yuri
  */
 @Entity
-@Table(name = "permisos")
+@Table(name = "Permisos")
 @NamedQueries({
-    @NamedQuery(name = "Permisos.findAll", query = "SELECT p FROM Permisos p"),
-    @NamedQuery(name = "Permisos.findByIdPermisos", query = "SELECT p FROM Permisos p WHERE p.idPermisos = :idPermisos"),
-    @NamedQuery(name = "Permisos.findByDescripcion", query = "SELECT p FROM Permisos p WHERE p.descripcion = :descripcion")})
+    @NamedQuery(name = "Permisos.findAll", query = "SELECT p FROM Permisos p")})
 public class Permisos implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -41,7 +39,7 @@ public class Permisos implements Serializable {
     @Basic(optional = false)
     @Column(name = "Descripcion")
     private String descripcion;
-    @ManyToMany(mappedBy = "permisosList", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "permisosList", fetch = FetchType.LAZY)
     private List<Perfil> perfilList;
 
     public Permisos() {
@@ -107,6 +105,6 @@ public class Permisos implements Serializable {
     @PostLoad
     public void fixIt() {
         this.perfilList = new ArrayList<>(this.perfilList);
+        
     }
-    
 }

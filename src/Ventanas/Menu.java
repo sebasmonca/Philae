@@ -6,6 +6,7 @@
 package Ventanas;
 
 import Clases.SessionUser;
+import java.awt.event.ActionEvent;
 import javax.swing.JFrame;
  
 
@@ -44,16 +45,16 @@ public class Menu extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         mnuCliente = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
         mnuMoldes = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
         mnuProduc = new javax.swing.JMenu();
-        jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem10 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem14 = new javax.swing.JMenuItem();
         mnuAyuda = new javax.swing.JMenu();
         jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem13 = new javax.swing.JMenuItem();
@@ -104,6 +105,11 @@ public class Menu extends javax.swing.JFrame {
 
         jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Cambiar clave.png"))); // NOI18N
         jMenuItem2.setText("Cambiar contraseña");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         mnuUsuario.add(jMenuItem2);
 
         jMenuBar1.add(mnuUsuario);
@@ -120,10 +126,6 @@ public class Menu extends javax.swing.JFrame {
         });
         mnuCliente.add(jMenuItem3);
 
-        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Consulta.png"))); // NOI18N
-        jMenuItem4.setText("Consultar cliente");
-        mnuCliente.add(jMenuItem4);
-
         jMenuBar1.add(mnuCliente);
 
         mnuMoldes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Moldes.png"))); // NOI18N
@@ -131,6 +133,11 @@ public class Menu extends javax.swing.JFrame {
 
         jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/gestionarmoldes.png"))); // NOI18N
         jMenuItem5.setText("Gestionar molde");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         mnuMoldes.add(jMenuItem5);
 
         jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/reporte.png"))); // NOI18N
@@ -146,24 +153,28 @@ public class Menu extends javax.swing.JFrame {
         mnuProduc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/produccion.png"))); // NOI18N
         mnuProduc.setText("Producción");
 
-        jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/gestionarProd.png"))); // NOI18N
-        jMenuItem8.setText("Gestionar producción");
-        mnuProduc.add(jMenuItem8);
-
         jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/reporte.png"))); // NOI18N
         jMenuItem9.setText("Ingresar informe");
         mnuProduc.add(jMenuItem9);
 
         jMenuBar1.add(mnuProduc);
 
-        jMenu1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Sebas\\Documents\\Materias\\2015-1\\PPI\\PPI_V2\\AvancePhilae\\src\\Imagenes\\Producto.PGN.png")); // NOI18N
+        jMenu1.setIcon(new javax.swing.ImageIcon("C:\\Users\\yuri\\Desktop\\Philae\\src\\Imagenes\\Producto.png")); // NOI18N
         jMenu1.setText("Producto");
 
-        jMenuItem10.setIcon(new javax.swing.ImageIcon("C:\\Users\\Sebas\\Documents\\Materias\\2015-1\\PPI\\PPI_V2\\AvancePhilae\\src\\Imagenes\\Gestionar Producto.png")); // NOI18N
         jMenuItem10.setText("Gestionar Producto");
         jMenu1.add(jMenuItem10);
 
         jMenuBar1.add(jMenu1);
+
+        jMenu3.setIcon(new javax.swing.ImageIcon("C:\\Users\\yuri\\Desktop\\Philae\\src\\Imagenes\\Máquina.png")); // NOI18N
+        jMenu3.setText("Maquina");
+
+        jMenuItem14.setIcon(new javax.swing.ImageIcon("C:\\Users\\yuri\\Desktop\\Philae\\src\\Imagenes\\produccion.png")); // NOI18N
+        jMenuItem14.setText("Gestion Maquina");
+        jMenu3.add(jMenuItem14);
+
+        jMenuBar1.add(jMenu3);
 
         mnuAyuda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ayuda.png"))); // NOI18N
         mnuAyuda.setText("Ayuda");
@@ -181,9 +192,10 @@ public class Menu extends javax.swing.JFrame {
         mnuAcerca.setText("Acerca de");
         jMenuBar1.add(mnuAcerca);
 
-        jMenu2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Sebas\\Documents\\Materias\\2015-1\\PPI\\PPI_V2\\AvancePhilae\\src\\Imagenes\\Logout.png")); // NOI18N
+        jMenu2.setIcon(new javax.swing.ImageIcon("C:\\Users\\yuri\\Desktop\\Philae\\src\\Imagenes\\Logout_1.png")); // NOI18N
         jMenu2.setText("Cerrar Sesión");
 
+        jMenuItem11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Ventanas/cancelar.png"))); // NOI18N
         jMenuItem11.setText("Cerrar");
         jMenuItem11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -225,6 +237,15 @@ public class Menu extends javax.swing.JFrame {
        
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+      SessionUser.isValidarSessionJFrame(new Molde(), SessionUser.isMolde);
+              
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+       // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -250,7 +271,7 @@ public class Menu extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
+        //</editor-fold>()
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -267,6 +288,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu8;
     private javax.swing.JMenu jMenu9;
@@ -276,13 +298,12 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JMenu mnuAcerca;
     private javax.swing.JMenu mnuAyuda;

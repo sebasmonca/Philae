@@ -16,17 +16,18 @@ import Persistencia.Entities.Cliente;
 import Persistencia.Entities.EstadoMoldeMaquina;
 import Persistencia.Entities.MaterialMolde;
 import Persistencia.Entities.MantenimientoMoldeMaquina;
-import Persistencia.Entities.Molde;
 import java.util.ArrayList;
 import java.util.List;
 import Persistencia.Entities.OrdenProduccion;
+import Persistencia.Entities.ConfiguracionProducto;
+import Persistencia.Entities.Molde;
 import Persistencia.Entities.ProgramacionMaquina;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 
 /**
  *
- * @author Sebas
+ * @author yuri
  */
 public class MoldeJpaController implements Serializable {
 
@@ -45,6 +46,9 @@ public class MoldeJpaController implements Serializable {
         }
         if (molde.getOrdenProduccionList() == null) {
             molde.setOrdenProduccionList(new ArrayList<OrdenProduccion>());
+        }
+        if (molde.getConfiguracionProductoList() == null) {
+            molde.setConfiguracionProductoList(new ArrayList<ConfiguracionProducto>());
         }
         if (molde.getProgramacionMaquinaList() == null) {
             molde.setProgramacionMaquinaList(new ArrayList<ProgramacionMaquina>());
@@ -80,6 +84,12 @@ public class MoldeJpaController implements Serializable {
                 attachedOrdenProduccionList.add(ordenProduccionListOrdenProduccionToAttach);
             }
             molde.setOrdenProduccionList(attachedOrdenProduccionList);
+            List<ConfiguracionProducto> attachedConfiguracionProductoList = new ArrayList<ConfiguracionProducto>();
+            for (ConfiguracionProducto configuracionProductoListConfiguracionProductoToAttach : molde.getConfiguracionProductoList()) {
+                configuracionProductoListConfiguracionProductoToAttach = em.getReference(configuracionProductoListConfiguracionProductoToAttach.getClass(), configuracionProductoListConfiguracionProductoToAttach.getIdConfiguracionProducto());
+                attachedConfiguracionProductoList.add(configuracionProductoListConfiguracionProductoToAttach);
+            }
+            molde.setConfiguracionProductoList(attachedConfiguracionProductoList);
             List<ProgramacionMaquina> attachedProgramacionMaquinaList = new ArrayList<ProgramacionMaquina>();
             for (ProgramacionMaquina programacionMaquinaListProgramacionMaquinaToAttach : molde.getProgramacionMaquinaList()) {
                 programacionMaquinaListProgramacionMaquinaToAttach = em.getReference(programacionMaquinaListProgramacionMaquinaToAttach.getClass(), programacionMaquinaListProgramacionMaquinaToAttach.getIdProgramacionMaquina());
@@ -117,6 +127,15 @@ public class MoldeJpaController implements Serializable {
                     oldIdMoldeOfOrdenProduccionListOrdenProduccion = em.merge(oldIdMoldeOfOrdenProduccionListOrdenProduccion);
                 }
             }
+            for (ConfiguracionProducto configuracionProductoListConfiguracionProducto : molde.getConfiguracionProductoList()) {
+                Molde oldIdMoldeOfConfiguracionProductoListConfiguracionProducto = configuracionProductoListConfiguracionProducto.getIdMolde();
+                configuracionProductoListConfiguracionProducto.setIdMolde(molde);
+                configuracionProductoListConfiguracionProducto = em.merge(configuracionProductoListConfiguracionProducto);
+                if (oldIdMoldeOfConfiguracionProductoListConfiguracionProducto != null) {
+                    oldIdMoldeOfConfiguracionProductoListConfiguracionProducto.getConfiguracionProductoList().remove(configuracionProductoListConfiguracionProducto);
+                    oldIdMoldeOfConfiguracionProductoListConfiguracionProducto = em.merge(oldIdMoldeOfConfiguracionProductoListConfiguracionProducto);
+                }
+            }
             for (ProgramacionMaquina programacionMaquinaListProgramacionMaquina : molde.getProgramacionMaquinaList()) {
                 Molde oldMoldeidMoldeOfProgramacionMaquinaListProgramacionMaquina = programacionMaquinaListProgramacionMaquina.getMoldeidMolde();
                 programacionMaquinaListProgramacionMaquina.setMoldeidMolde(molde);
@@ -150,6 +169,8 @@ public class MoldeJpaController implements Serializable {
             List<MantenimientoMoldeMaquina> mantenimientoMoldeMaquinaListNew = molde.getMantenimientoMoldeMaquinaList();
             List<OrdenProduccion> ordenProduccionListOld = persistentMolde.getOrdenProduccionList();
             List<OrdenProduccion> ordenProduccionListNew = molde.getOrdenProduccionList();
+            List<ConfiguracionProducto> configuracionProductoListOld = persistentMolde.getConfiguracionProductoList();
+            List<ConfiguracionProducto> configuracionProductoListNew = molde.getConfiguracionProductoList();
             List<ProgramacionMaquina> programacionMaquinaListOld = persistentMolde.getProgramacionMaquinaList();
             List<ProgramacionMaquina> programacionMaquinaListNew = molde.getProgramacionMaquinaList();
             List<String> illegalOrphanMessages = null;
@@ -167,6 +188,14 @@ public class MoldeJpaController implements Serializable {
                         illegalOrphanMessages = new ArrayList<String>();
                     }
                     illegalOrphanMessages.add("You must retain OrdenProduccion " + ordenProduccionListOldOrdenProduccion + " since its idMolde field is not nullable.");
+                }
+            }
+            for (ConfiguracionProducto configuracionProductoListOldConfiguracionProducto : configuracionProductoListOld) {
+                if (!configuracionProductoListNew.contains(configuracionProductoListOldConfiguracionProducto)) {
+                    if (illegalOrphanMessages == null) {
+                        illegalOrphanMessages = new ArrayList<String>();
+                    }
+                    illegalOrphanMessages.add("You must retain ConfiguracionProducto " + configuracionProductoListOldConfiguracionProducto + " since its idMolde field is not nullable.");
                 }
             }
             for (ProgramacionMaquina programacionMaquinaListOldProgramacionMaquina : programacionMaquinaListOld) {
@@ -206,6 +235,13 @@ public class MoldeJpaController implements Serializable {
             }
             ordenProduccionListNew = attachedOrdenProduccionListNew;
             molde.setOrdenProduccionList(ordenProduccionListNew);
+            List<ConfiguracionProducto> attachedConfiguracionProductoListNew = new ArrayList<ConfiguracionProducto>();
+            for (ConfiguracionProducto configuracionProductoListNewConfiguracionProductoToAttach : configuracionProductoListNew) {
+                configuracionProductoListNewConfiguracionProductoToAttach = em.getReference(configuracionProductoListNewConfiguracionProductoToAttach.getClass(), configuracionProductoListNewConfiguracionProductoToAttach.getIdConfiguracionProducto());
+                attachedConfiguracionProductoListNew.add(configuracionProductoListNewConfiguracionProductoToAttach);
+            }
+            configuracionProductoListNew = attachedConfiguracionProductoListNew;
+            molde.setConfiguracionProductoList(configuracionProductoListNew);
             List<ProgramacionMaquina> attachedProgramacionMaquinaListNew = new ArrayList<ProgramacionMaquina>();
             for (ProgramacionMaquina programacionMaquinaListNewProgramacionMaquinaToAttach : programacionMaquinaListNew) {
                 programacionMaquinaListNewProgramacionMaquinaToAttach = em.getReference(programacionMaquinaListNewProgramacionMaquinaToAttach.getClass(), programacionMaquinaListNewProgramacionMaquinaToAttach.getIdProgramacionMaquina());
@@ -257,6 +293,17 @@ public class MoldeJpaController implements Serializable {
                     if (oldIdMoldeOfOrdenProduccionListNewOrdenProduccion != null && !oldIdMoldeOfOrdenProduccionListNewOrdenProduccion.equals(molde)) {
                         oldIdMoldeOfOrdenProduccionListNewOrdenProduccion.getOrdenProduccionList().remove(ordenProduccionListNewOrdenProduccion);
                         oldIdMoldeOfOrdenProduccionListNewOrdenProduccion = em.merge(oldIdMoldeOfOrdenProduccionListNewOrdenProduccion);
+                    }
+                }
+            }
+            for (ConfiguracionProducto configuracionProductoListNewConfiguracionProducto : configuracionProductoListNew) {
+                if (!configuracionProductoListOld.contains(configuracionProductoListNewConfiguracionProducto)) {
+                    Molde oldIdMoldeOfConfiguracionProductoListNewConfiguracionProducto = configuracionProductoListNewConfiguracionProducto.getIdMolde();
+                    configuracionProductoListNewConfiguracionProducto.setIdMolde(molde);
+                    configuracionProductoListNewConfiguracionProducto = em.merge(configuracionProductoListNewConfiguracionProducto);
+                    if (oldIdMoldeOfConfiguracionProductoListNewConfiguracionProducto != null && !oldIdMoldeOfConfiguracionProductoListNewConfiguracionProducto.equals(molde)) {
+                        oldIdMoldeOfConfiguracionProductoListNewConfiguracionProducto.getConfiguracionProductoList().remove(configuracionProductoListNewConfiguracionProducto);
+                        oldIdMoldeOfConfiguracionProductoListNewConfiguracionProducto = em.merge(oldIdMoldeOfConfiguracionProductoListNewConfiguracionProducto);
                     }
                 }
             }
@@ -314,6 +361,13 @@ public class MoldeJpaController implements Serializable {
                     illegalOrphanMessages = new ArrayList<String>();
                 }
                 illegalOrphanMessages.add("This Molde (" + molde + ") cannot be destroyed since the OrdenProduccion " + ordenProduccionListOrphanCheckOrdenProduccion + " in its ordenProduccionList field has a non-nullable idMolde field.");
+            }
+            List<ConfiguracionProducto> configuracionProductoListOrphanCheck = molde.getConfiguracionProductoList();
+            for (ConfiguracionProducto configuracionProductoListOrphanCheckConfiguracionProducto : configuracionProductoListOrphanCheck) {
+                if (illegalOrphanMessages == null) {
+                    illegalOrphanMessages = new ArrayList<String>();
+                }
+                illegalOrphanMessages.add("This Molde (" + molde + ") cannot be destroyed since the ConfiguracionProducto " + configuracionProductoListOrphanCheckConfiguracionProducto + " in its configuracionProductoList field has a non-nullable idMolde field.");
             }
             List<ProgramacionMaquina> programacionMaquinaListOrphanCheck = molde.getProgramacionMaquinaList();
             for (ProgramacionMaquina programacionMaquinaListOrphanCheckProgramacionMaquina : programacionMaquinaListOrphanCheck) {
@@ -394,5 +448,17 @@ public class MoldeJpaController implements Serializable {
             em.close();
         }
     }
+    public List<Molde> buscar(String id, String nombreMolde) {
+         EntityManager em = getEntityManager();
+        try {
+            CriteriaQuery<Persistencia.Entities.Molde> cq = em.getCriteriaBuilder().createQuery(Molde.class);
+            Root<Molde> rt = cq.from(Molde.class);
+            cq.where(em.getCriteriaBuilder().equal(rt.get("idMolde"), Integer.parseInt(id)),
+                    em.getCriteriaBuilder().equal(rt.get("nombre"),nombreMolde));
+            return (em.createQuery(cq)).getResultList();
+        } finally {
+            em.close();
+        }
     
+    }
 }

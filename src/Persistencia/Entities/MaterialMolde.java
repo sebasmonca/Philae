@@ -24,14 +24,12 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Sebas
+ * @author yuri
  */
 @Entity
-@Table(name = "material_molde")
+@Table(name = "Material_Molde")
 @NamedQueries({
-    @NamedQuery(name = "MaterialMolde.findAll", query = "SELECT m FROM MaterialMolde m"),
-    @NamedQuery(name = "MaterialMolde.findByIdMaterialMolde", query = "SELECT m FROM MaterialMolde m WHERE m.idMaterialMolde = :idMaterialMolde"),
-    @NamedQuery(name = "MaterialMolde.findByDescripcionmolde", query = "SELECT m FROM MaterialMolde m WHERE m.descripcionmolde = :descripcionmolde")})
+    @NamedQuery(name = "MaterialMolde.findAll", query = "SELECT m FROM MaterialMolde m")})
 public class MaterialMolde implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -42,7 +40,7 @@ public class MaterialMolde implements Serializable {
     @Basic(optional = false)
     @Column(name = "Descripcion_molde")
     private String descripcionmolde;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMaterialMolde", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idMaterialMolde", fetch = FetchType.LAZY)
     private List<Molde> moldeList;
 
     public MaterialMolde() {
@@ -108,6 +106,6 @@ public class MaterialMolde implements Serializable {
     @PostLoad
     public void fixIt() {
         this.moldeList = new ArrayList<>(this.moldeList);
+        
     }
-    
 }
